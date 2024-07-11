@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'application'
+
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // 추가된 부분
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    //jackson databind
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.17.2'
+
+    //jsoup
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.17.2'
+}
+
+mainClassName = 'org.example.Main'
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': mainClassName
+        )
+    }
+}
+
+shadowJar { // 추가된 부분
+    archiveClassifier.set('all')
+}
+
+test {
+    useJUnitPlatform()
+}
